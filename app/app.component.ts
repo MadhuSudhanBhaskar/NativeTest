@@ -52,10 +52,6 @@ export class AppComponent extends observableModule.Observable implements OnInit 
             this.getLocation();
         }
         //this.showMap();
-this.ngZone.run(()=>{
- this.myItems = this.userservice.getCityDetails();
-})
-
     }
 
     constructor(private userservice : UserService, private ngZone:NgZone) {
@@ -86,6 +82,8 @@ this.ngZone.run(()=>{
                     })
                 });*/
 
+        this.myItems = this.userservice.getCityDetails();
+
                 console.dump(this.myItems);
             }
         }, (e) => {
@@ -98,6 +96,8 @@ this.ngZone.run(()=>{
                  this.myItems.next([...r]);
                  console.dump(this.myItems);
                 });
+
+        this.myItems = this.userservice.getCityDetails();
 
             });*/
             //this.myItems = this.userservice.getCityDetails();
