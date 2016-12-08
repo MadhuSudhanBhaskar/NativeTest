@@ -21,7 +21,7 @@
       "version": "2.4.0"
     },
     "tns-android": {
-      "version": "2.4.0"
+      "version": "2.4.1"
     }
   },
   "dependencies": {
@@ -31,12 +31,16 @@
     "@angular/http": "2.1.2",
     "@angular/platform-browser": "2.1.2",
     "@angular/platform-browser-dynamic": "2.1.2",
-    "@angular/platform-server": "2.1.2",
     "@angular/router": "3.1.2",
     "nativescript-angular": "1.1.2",
+    "nativescript-batch": "^2.10.3",
+    "nativescript-geolocation": "0.0.15",
+    "nativescript-mapbox": "^2.3.1",
+    "nativescript-theme-core": "^1.0.1",
+    "nativescript-toolbox": "^1.43.1",
     "reflect-metadata": "0.1.8",
     "rxjs": "5.0.0-beta.12",
-    "tns-core-modules": "2.4.0"
+    "tns-core-modules": "^2.4.0"
   },
   "devDependencies": {
     "babel-traverse": "6.8.0",
@@ -45,6 +49,7 @@
     "filewalker": "0.1.2",
     "lazy": "1.0.11",
     "nativescript-dev-typescript": "^0.3.2",
+    "tns-platform-declarations": "^2.4.0",
     "typescript": "^2.0.10",
     "zone.js": "0.6.21"
   }

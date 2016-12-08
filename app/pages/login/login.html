@@ -1,0 +1,41 @@
+<!--<GridLayout>
+    <StackLayout>
+        <TextField hint="Email Address" keyboardType="email"
+                   autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.email"></TextField>
+        <TextField hint="Password" secure="true" [(ngModel)]="user.password"></TextField>
+
+        <Button text="Sign in"  (tap) = "test()"></Button>
+        <Button text="Sign up for Groceries" (pan) = "test1($event)" class="test"></Button>
+        <Button text="Redirect" (tap) = "redirect()" class="test"></Button>
+    </StackLayout>
+    <StackLayout class="dimmer" visibility="{{showLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" width="20%" height="20%" visibility="{{showLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator [busy] = "isLoading"></ActivityIndicator>
+    </GridLayout>
+</GridLayout>-->
+<StackLayout backgroundColor="red">
+    <Button text="Test"></Button>
+    <StackLayout backgroundColor="yellow" height="80%">
+        <ListView [items]="myItems | async" class="list-group">
+            <template let-item="item" let-i="index" let-odd="odd" let-even="even">
+                <GridLayout class="list-group-item" [class.odd]="odd" [class.even]="even">
+                    <Label [text]="item.name" ></Label>
+                </GridLayout>
+            </template>
+        </ListView>
+        <!--<ContentView id="mapboxContainer" row="1"  height="50%">
+            <Mapbox
+                    mapReady="onMapReady"
+                    latitude="39.8282"
+                    longitude="-98.5795"
+                    zoomLevel="2.9"
+                    showUserLocation="false"
+                    hideLogo="true"
+                    hideAttribution="true"
+                    disableRotation="true"
+                    accessToken="pk.eyJ1IjoibWFkaHVzdWRoYW5iaGFza2FyIiwiYSI6ImNpd2R2MXY2cTAwOXUyeXA1d3M5cHM2cnoifQ.LJP0xOzPGLT3wWk4F-SvmA">
+            </Mapbox>
+        </ContentView>-->
+    </StackLayout>
+
+</StackLayout>

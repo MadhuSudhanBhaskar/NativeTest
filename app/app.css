@@ -1,0 +1,41 @@
+@import 'nativescript-theme-core/css/core.light.css';
+
+.layoutSubmit  {
+    background-color: red;
+}
+
+.layourSGreen {
+    background-color: green;
+    border-radius : 100;
+    width : 200;
+    height : 100;
+}
+
+
+Image {
+  margin-top: 5;
+  margin-bottom: 20;
+}
+Button, TextField {
+  margin-left: 16;
+  margin-right: 16;
+  margin-bottom: 10;
+}
+.submit-button {
+  background-color: #CB1D00;
+  color: white;
+  margin-top: 20;
+}
+
+.dimmer {
+background-color : rgba(0, 0, 0, 0.5);
+height: 100%;
+transition: all 0.2s ease;
+width: 100%;
+opacity : 0.8;
+}
+
+ListView {
+  background-color: transparent;
+  opacity: 0;
+}
