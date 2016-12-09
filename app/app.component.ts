@@ -7,7 +7,7 @@ import geolocation = require("nativescript-geolocation");
 import { Observable } from "rxjs/Observable";
 var mapbox = require("nativescript-mapbox");
 import { registerElement } from "nativescript-angular/element-registry";
-//registerElement("MapBox", () => require("nativescript-mapbox").Mapbox);
+registerElement("MapBox", () => require("nativescript-mapbox").Mapbox);
 
 declare var java;
 declare var android;
@@ -19,7 +19,7 @@ declare var android;
   templateUrl: "./pages/login/login.html"
 })
 export class AppComponent implements OnInit {
-    //@ViewChild("mapboxContainer") FirstCheckBox: ElementRef;
+    @ViewChild("mapboxContainer") FirstCheckBox: ElementRef;
     user : User;
     a : Number;
     isLoading : boolean = false;
@@ -31,8 +31,6 @@ export class AppComponent implements OnInit {
     public myItems : Observable<Array<ListCities>>;
 
     ngOnInit(){
-        this.myItems = this.userservice.getCityDetails();
-
         if (!geolocation.isEnabled()) {
             geolocation.enableLocationRequest().then(() => {
                 this.getLocation();
@@ -43,7 +41,6 @@ export class AppComponent implements OnInit {
         else {
             this.getLocation();
         }
-        //this.showMap();
     }
 
     constructor(private userservice : UserService) {
@@ -51,7 +48,7 @@ export class AppComponent implements OnInit {
     }
 
     getLocation() {
-        var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10,  timeout: 20000})
+        var location = geolocation.getCurrentLocation({desiredAccuracy: 3, updateDistance: 10,  timeout: 10000})
         .then((loc) => {
             if (loc) {
                 console.log("latitude: " + loc.latitude + 'longitute: '+loc.longitude);
@@ -60,45 +57,13 @@ export class AppComponent implements OnInit {
                     longitude : loc.longitude,
                 });
                 this.latiNew = loc;
-
-                // Use rxjs observables instead
-                // don't use {N} observable with Angular+{N} projects
-                // this.eventData = {eventName: "myCustomEventName",object: this};
-                // observableObject.notify(this.eventData);
-
-                /*this.userservice.getCityDetails().subscribe((r) => {
-                    //console.log('after service call');
-                    //this.myItems = r;
-                    //console.dump(this.myItems);
-                   this.ngZone.run(()=>{
-                        this.myItems.next([...r]);
-                    console.dump(this.myItems);
-                    })
-                });*/
+                this.myItems = this.userservice.getCityDetails();
             }
         }, (e) => {
             console.log("Error: " + e.message);
-            /*this.userservice.getCityDetails().subscribe((r) => {
-                //console.log('after service call');
-                //this.myItems = r;
-                //console.dump(this.myItems);
-                this.ngZone.run(()=>{
-                 this.myItems.next([...r]);
-                 console.dump(this.myItems);
-                });
-
-        this.myItems = this.userservice.getCityDetails();
-
-            });*/
-            //this.myItems = this.userservice.getCityDetails();
-           // console.dump(this.myItems);
+             this.myItems = this.userservice.getCityDetails();
+             console.dump(this.myItems);
         });
-
-        // instead subscribe to standard rxjs event stream
-        // observableObject.on('myCustomEventName', (eventData) => {
-        //      //this.myItems = this.userservice.getCityDetails();
-        // },this);
-
     }
 
 

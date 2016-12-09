@@ -13,7 +13,7 @@ export class UserService {
     constructor(private http : Http) { }
 
     public getCityDetails() : Observable<ListCities[]> {
-console.log('service call');
+       console.log('service call');
 
        return this.http
          .get(`${this.baseUrl}`, {headers: this.getHeaders()})

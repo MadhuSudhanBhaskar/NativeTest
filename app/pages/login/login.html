@@ -14,9 +14,8 @@
     </GridLayout>
 </GridLayout>-->
 <StackLayout>
-    <Button text="Test"></Button>
-
-    <ListView [items]="myItems | async" class="list-group">
+    <GridLayout rows="*, auto">
+    <ListView [items]="myItems | async" class="list-group" row="0">
         <template let-item="item" let-i="index" let-odd="odd" let-even="even">
             <!-- c-bg-grey is utility from core theme -->
             <!-- you can see more color utilities here: https://github.com/NativeScript/theme/blob/master/app/scss/utilities/_colors.scss -->
@@ -25,19 +24,20 @@
             </StackLayout>
         </template>
     </ListView>
-        <!--<ContentView id="mapboxContainer" row="1"  height="50%">
+        <ContentView id="mapboxContainer" row="1"  height="50%">
             <Mapbox
                     mapReady="onMapReady"
                     latitude="39.8282"
                     longitude="-98.5795"
                     zoomLevel="2.9"
-                    showUserLocation="false"
+                    showUserLocation="true"
                     hideLogo="true"
+                    mapStyle="light"
                     hideAttribution="true"
                     disableRotation="true"
                     accessToken="pk.eyJ1IjoibWFkaHVzdWRoYW5iaGFza2FyIiwiYSI6ImNpd2R2MXY2cTAwOXUyeXA1d3M5cHM2cnoifQ.LJP0xOzPGLT3wWk4F-SvmA">
             </Mapbox>
-        </ContentView>-->
-
+        </ContentView>
+</GridLayout>
 
 </StackLayout>
