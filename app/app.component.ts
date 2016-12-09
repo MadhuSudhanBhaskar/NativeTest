@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
         //console.dump(markers);
         console.dump(this.MapBoxElement);
 
-        this.MapBoxElement.nativeElement.addMarkers(markers);
+        map.addMarkers(markers);
     }
 
     test() {
