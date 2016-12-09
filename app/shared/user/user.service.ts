@@ -36,10 +36,6 @@ console.log('service call');
 function mapPersons(response:Response): ListCities[]{
   console.log('mapPersons');
   let data = response.json();
-  // console.log(data);
-  // for (let key in data) {
-  //   console.log(`${key}: ${data[key]}`);
-  // }
     return response.json().bblocations.map(toPerson);
 }
 
