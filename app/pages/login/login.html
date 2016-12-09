@@ -13,16 +13,18 @@
         <ActivityIndicator [busy] = "isLoading"></ActivityIndicator>
     </GridLayout>
 </GridLayout>-->
-<StackLayout backgroundColor="red">
+<StackLayout>
     <Button text="Test"></Button>
-    <StackLayout backgroundColor="yellow" height="80%">
-        <ListView [items]="myItems | async" class="list-group">
-            <template let-item="item" let-i="index" let-odd="odd" let-even="even">
-                <GridLayout class="list-group-item" [class.odd]="odd" [class.even]="even">
-                    <Label [text]="item.name" ></Label>
-                </GridLayout>
-            </template>
-        </ListView>
+
+    <ListView [items]="myItems | async" class="list-group">
+        <template let-item="item" let-i="index" let-odd="odd" let-even="even">
+            <!-- c-bg-grey is utility from core theme -->
+            <!-- you can see more color utilities here: https://github.com/NativeScript/theme/blob/master/app/scss/utilities/_colors.scss -->
+            <StackLayout class="list-group-item" [class.c-bg-grey]="odd">
+                <Label [text]="item.name"></Label>
+            </StackLayout>
+        </template>
+    </ListView>
         <!--<ContentView id="mapboxContainer" row="1"  height="50%">
             <Mapbox
                     mapReady="onMapReady"
@@ -36,6 +38,6 @@
                     accessToken="pk.eyJ1IjoibWFkaHVzdWRoYW5iaGFza2FyIiwiYSI6ImNpd2R2MXY2cTAwOXUyeXA1d3M5cHM2cnoifQ.LJP0xOzPGLT3wWk4F-SvmA">
             </Mapbox>
         </ContentView>-->
-    </StackLayout>
+
 
 </StackLayout>
