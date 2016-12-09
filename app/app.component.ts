@@ -1,13 +1,14 @@
 import * as app from 'application';
-import { Component , OnInit, ElementRef, ViewChild} from "@angular/core";
+import { Component , OnInit, ElementRef, ViewChild, AfterViewInit} from "@angular/core";
 import { User, LatLong, ListCities} from "./shared/user/user";
 import { UserService } from "./shared/user/user.service";
 import { PanGestureEventData, GestureStateTypes } from "ui/gestures";
 import geolocation = require("nativescript-geolocation");
 import { Observable } from "rxjs/Observable";
-var mapbox = require("nativescript-mapbox");
+
 import { registerElement } from "nativescript-angular/element-registry";
-registerElement("MapBox", () => require("nativescript-mapbox").Mapbox);
+var map = require("nativescript-mapbox");
+registerElement("Mapbox", () => map.Mapbox);
 
 declare var java;
 declare var android;
@@ -19,7 +20,7 @@ declare var android;
   templateUrl: "./pages/login/login.html"
 })
 export class AppComponent implements OnInit {
-    @ViewChild("mapboxContainer") FirstCheckBox: ElementRef;
+    @ViewChild("mapboxContainer") MapBoxElement: ElementRef;
     user : User;
     a : Number;
     isLoading : boolean = false;
@@ -58,14 +59,38 @@ export class AppComponent implements OnInit {
                 });
                 this.latiNew = loc;
                 this.myItems = this.userservice.getCityDetails();
+
+                this.myItems.subscribe((data) => {
+
+                    //Call the map, to display marker
+                    //this.setMarkerCenter();
+                    this.addMarkers(data);
+                });
             }
         }, (e) => {
             console.log("Error: " + e.message);
              this.myItems = this.userservice.getCityDetails();
-             console.dump(this.myItems);
+             this.myItems.subscribe((data) => {
+                 //console.dump(data);
+                 //this.setMarkerCenter();
+                 //Call the map, to display marker
+                 this.addMarkers(data);
+             });
         });
     }
 
+    addMarkers(data : any) {
+        let markers = data.map((reqData) => {
+            return {
+                lat: reqData.latitude,
+                lng: reqData.longitude
+            }
+        });
+        //console.dump(markers);
+        console.dump(this.MapBoxElement);
+
+        this.MapBoxElement.nativeElement.addMarkers(markers);
+    }
 
     test() {
         this.isLoading = !this.isLoading;
@@ -73,6 +98,7 @@ export class AppComponent implements OnInit {
     }
 
     getCities() {
+
 
     }
 
@@ -99,48 +125,8 @@ export class AppComponent implements OnInit {
 
     }
 
-    showMap() {
-        mapbox.show({
-          accessToken: 'pk.eyJ1IjoibWFkaHVzdWRoYW5iaGFza2FyIiwiYSI6ImNpd2R2MXY2cTAwOXUyeXA1d3M5cHM2cnoifQ.LJP0xOzPGLT3wWk4F-SvmA', // see 'Prerequisites' above
-          style: mapbox.MapStyle.DARK, // mapbox.MapStyle enum in the source for other options, default mapbox.MapStyle.STREETS
-          margins: {
-            left: 0, // default 0
-            right: 0, // default 0
-            top: 450, // default 0
-            bottom: 0,// default 0
-            width : 100,
-            height : 100
-          },
-          center: { // optional without a default
-            lat: 52.3702160,
-            lng: 4.8951680
-          },
-          zoomLevel: 9.25, // 0-20, default 0
-          showUserLocation: true, // default false - requires location permissions on Android which you can remove from AndroidManifest.xml if you don't need them
-          hideAttribution: false, // default false, Mapbox requires this default if you're on a free plan
-          hideLogo: false, // default false, Mapbox requires this default if you're on a free plan
-          hideCompass: false, // default false
-          disableRotation: false, // default false
-          disableScroll: true, // default false
-          disableZoom: false, // default false
-          markers: [ // optional without a default
-            {
-              lat: 52.3732160, // mandatory
-              lng: 4.8941680, // mandatory
-              title: 'Nice location', // recommended to pass in
-              subtitle: 'Really really nice location', // one line is available on iOS, multiple on Android
-              iconPath: 'res/markers/green_pin_marker.png', // anywhere in your app folder
-              onTap: function(marker) { console.log("This marker was tapped"); },
-              onCalloutTap: function(marker) { console.log("The callout of this marker was tapped"); }
-            }
-          ]
-        }).then(
-            function(result) {
-              console.log("Mapbox show done");
-            },
-            function(error) {
-              console.log("mapbox show error: " + error);
-            }
-        )
-    }
 }
+
+function     onMapReady(args) {
+                 console.log('Madhu');
+             }

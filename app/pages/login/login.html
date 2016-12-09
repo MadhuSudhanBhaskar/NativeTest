@@ -24,15 +24,12 @@
             </StackLayout>
         </template>
     </ListView>
-        <ContentView id="mapboxContainer" row="1"  height="50%">
+        <ContentView #mapboxContainer row="1"  height="50%">
             <Mapbox
                     mapReady="onMapReady"
-                    latitude="39.8282"
-                    longitude="-98.5795"
-                    zoomLevel="2.9"
                     showUserLocation="true"
                     hideLogo="true"
-                    mapStyle="light"
+                    mapStyle="dark"
                     hideAttribution="true"
                     disableRotation="true"
                     accessToken="pk.eyJ1IjoibWFkaHVzdWRoYW5iaGFza2FyIiwiYSI6ImNpd2R2MXY2cTAwOXUyeXA1d3M5cHM2cnoifQ.LJP0xOzPGLT3wWk4F-SvmA">
