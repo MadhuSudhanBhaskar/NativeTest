@@ -34,8 +34,3 @@ transition: all 0.2s ease;
 width: 100%;
 opacity : 0.8;
 }
-
-ListView {
-  background-color: transparent;
-  opacity: 0;
-}

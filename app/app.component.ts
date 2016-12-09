@@ -1,18 +1,13 @@
-import Application = require("application");
-import platform = require("platform");
-import { Component , OnInit, ChangeDetectionStrategy, ElementRef, ViewChild} from "@angular/core";
+import * as app from 'application';
+import { Component , OnInit, ElementRef, ViewChild} from "@angular/core";
 import { User, LatLong, ListCities} from "./shared/user/user";
 import { UserService } from "./shared/user/user.service";
 import { PanGestureEventData, GestureStateTypes } from "ui/gestures";
 import geolocation = require("nativescript-geolocation");
-import { Observable as RxObservable } from "rxjs/Observable";
-import observableModule = require("data/observable");
-var observableObject = new observableModule.Observable();
+import { Observable } from "rxjs/Observable";
 var mapbox = require("nativescript-mapbox");
 import { registerElement } from "nativescript-angular/element-registry";
 //registerElement("MapBox", () => require("nativescript-mapbox").Mapbox);
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
-import {NgZone} from "@angular/core"
 
 declare var java;
 declare var android;
@@ -21,26 +16,23 @@ declare var android;
 */
 @Component({
   selector: "my-app",
-  providers : [UserService],
-  templateUrl: "pages/login/login.html",
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: "./pages/login/login.html"
 })
-export class AppComponent extends observableModule.Observable implements OnInit {
+export class AppComponent implements OnInit {
     //@ViewChild("mapboxContainer") FirstCheckBox: ElementRef;
-    user : User ;
+    user : User;
     a : Number;
     isLoading : boolean = false;
     showLoading : boolean = false;
     people: ListCities[] = [];
     errorMessage: string = '';
     latiNew : LatLong ;
-    eventData: observableModule.EventData;
 
-    //public myItems: BehaviorSubject<Array<ListCities>> = new BehaviorSubject([]);
-
-    public myItems : RxObservable<Array<ListCities>>;
+    public myItems : Observable<Array<ListCities>>;
 
     ngOnInit(){
+        this.myItems = this.userservice.getCityDetails();
+
         if (!geolocation.isEnabled()) {
             geolocation.enableLocationRequest().then(() => {
                 this.getLocation();
@@ -54,8 +46,7 @@ export class AppComponent extends observableModule.Observable implements OnInit 
         //this.showMap();
     }
 
-    constructor(private userservice : UserService, private ngZone:NgZone) {
-        super();
+    constructor(private userservice : UserService) {
         this.user = new User();
     }
 
@@ -69,8 +60,11 @@ export class AppComponent extends observableModule.Observable implements OnInit 
                     longitude : loc.longitude,
                 });
                 this.latiNew = loc;
-                this.eventData = {eventName: "myCustomEventName",object: this};
-                observableObject.notify(this.eventData);
+
+                // Use rxjs observables instead
+                // don't use {N} observable with Angular+{N} projects
+                // this.eventData = {eventName: "myCustomEventName",object: this};
+                // observableObject.notify(this.eventData);
 
                 /*this.userservice.getCityDetails().subscribe((r) => {
                     //console.log('after service call');
@@ -81,10 +75,6 @@ export class AppComponent extends observableModule.Observable implements OnInit 
                     console.dump(this.myItems);
                     })
                 });*/
-
-        this.myItems = this.userservice.getCityDetails();
-
-                console.dump(this.myItems);
             }
         }, (e) => {
             console.log("Error: " + e.message);
@@ -104,9 +94,10 @@ export class AppComponent extends observableModule.Observable implements OnInit 
            // console.dump(this.myItems);
         });
 
-        observableObject.on('myCustomEventName', (eventData) => {
-             //this.myItems = this.userservice.getCityDetails();
-        },this);
+        // instead subscribe to standard rxjs event stream
+        // observableObject.on('myCustomEventName', (eventData) => {
+        //      //this.myItems = this.userservice.getCityDetails();
+        // },this);
 
     }
 
@@ -121,8 +112,8 @@ export class AppComponent extends observableModule.Observable implements OnInit 
     }
 
     redirect() {
-        if(Application.android){
-            Application.android.currentContext.startActivityForResult(new android.content.Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+        if(app.android){
+            app.android.currentContext.startActivityForResult(new android.content.Intent(android.provider.Settings.ACTION_SETTINGS), 0);
          }
     }
     test1(args: PanGestureEventData) {

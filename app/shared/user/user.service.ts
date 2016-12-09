@@ -11,7 +11,8 @@ export class UserService {
 
 
     constructor(private http : Http) { }
-getCityDetails() : Observable<ListCities[]> {
+
+    public getCityDetails() : Observable<ListCities[]> {
 console.log('service call');
 
        return this.http
@@ -33,7 +34,8 @@ console.log('service call');
 
 
 function mapPersons(response:Response): ListCities[]{
-    console.log('mapPersons');
+  console.log('mapPersons');
+  let data = response.json();
     return response.json().bblocations.map(toPerson);
 }
 
